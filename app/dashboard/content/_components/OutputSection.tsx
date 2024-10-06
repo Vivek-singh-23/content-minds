@@ -20,7 +20,7 @@ function OutputSection({aiOutput}:props) {
     <div className="bg-white shagow-lg border rounded-lg">
       <div className="flex justify-between items-center p-5">
         <h2 className="font-medium text-lg  ">Your Result</h2>
-        <Button className="flex gap-2">
+        <Button className="flex gap-2" onClick={()=>navigator.clipboard.writeText(aiOutput)}>
           <Copy />
           Copy
         </Button>

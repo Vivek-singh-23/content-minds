@@ -1,17 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import FormSection from "../_components/FormSection";
 import OutputSection from "../_components/OutputSection";
 import { TEMPLATE } from "../../_components/TemplateListSection";
 import Templates from "@/app/(data)/Templates";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import Link from "next/link"; // Correct import for navigation
+import Link from "next/link"; 
 import { chatSession } from "@/utils/AiModal";
 import { db } from "@/utils/db";
 import { AIOutput } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
+import { TotalUsageContext } from "@/app/(context)/TotalUsageContext";
+import { useRouter } from "next/navigation";
 
 interface PROPS {
   params: {
@@ -26,9 +28,15 @@ function CreateNewContent(props: PROPS) {
   const [loading, setLoading] = useState(false);
   const [aiOutput, setAiOutput] = useState<string>("");
   const {user} = useUser();
-
-
+  const {totalUsage, setTotalUsage} = useContext(TotalUsageContext)
+  const router = useRouter()
   const GenerateAIContent = async (formData: any) => {
+
+    if(totalUsage>=10000){
+      router.push('/dashboard/billing')
+      return;
+    }
+
     setLoading(true);
     const SelectedPrompt = selectedTemplate?.aiPrompt;
     const FinalAiPrompt = JSON.stringify(formData) + "," + SelectedPrompt;

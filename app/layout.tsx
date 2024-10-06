@@ -1,19 +1,12 @@
-
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import Outfit from "next/font/local";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+// Import Outfit font from Google Fonts
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["100", "300", "400", "500", "700", "900"],
 });
 
 export const metadata: Metadata = {
@@ -28,13 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+      <html lang="en">
+        <body className={`${outfit.className} antialiased`}>{children}</body>
+      </html>
     </ClerkProvider>
   );
 }

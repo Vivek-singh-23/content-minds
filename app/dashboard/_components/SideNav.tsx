@@ -38,17 +38,20 @@ function SideNav() {
   return (
     <div className="h-screen relative p-5 shadow-sm border bg-white">
       <div className="flex justify-center">
-        <Image src={"/logo.svg"} alt="logo" width={120} height={100} />
+        <a href="/dashboard">
+          <Image src={"/logo.svg"} alt="logo" width={120} height={100} />
+        </a>
       </div>
       <hr className="my-6 border" />
       <div className="mt-3">
         {MenuList.map((menu, index) => (
-          <Link href={menu.path} key={menu.path}>
+          <Link href={menu.path}>
             <div
               className={`flex gap-2 mb-2 p-3
-        hover:bg-primary hover:text-white rounded-lg
-        cursor-pointer items-center
-        ${path == menu.path && "bg-primary text-white"}`}
+                    hover:bg-primary hover:text-white rounded-lg
+                    cursor-pointer items-center
+                    ${path == menu.path && "bg-primary text-white"}
+                    `}
             >
               <menu.icon className="h-6 w-6" />
               <h2 className="text-lg">{menu.name}</h2>
